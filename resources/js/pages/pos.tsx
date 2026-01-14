@@ -170,6 +170,8 @@ export default function Pos() {
         [categories],
     );
 
+    const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
+
     const subtotal = cartItems.reduce(
         (total, item) => total + item.price * item.qty,
         0,
@@ -356,13 +358,13 @@ export default function Pos() {
                 </div>
             </header>
 
-            <main className="mx-auto grid max-w-[1600px] grid-cols-1 gap-6 px-6 py-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <main className="mx-auto grid max-w-[1600px] grid-cols-1 gap-6 px-6 py-6 md:grid-cols-[1.15fr_0.85fr]">
                 <section className="flex flex-col gap-4">
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm md:p-3">
+                        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500 md:text-[10px]">
                             Search
                         </label>
-                        <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100">
+                        <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 md:mt-1 md:px-2 md:py-1.5">
                             <Search className="h-4 w-4 text-slate-400" />
                             <input
                                 ref={searchRef}
@@ -377,11 +379,11 @@ export default function Pos() {
                                 placeholder="Search products or scan barcode"
                                 className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
                             />
-                            <span className="rounded-full bg-white px-2 py-1 text-[10px] font-semibold uppercase text-slate-400">
+                            <span className="rounded-full bg-white px-2 py-1 text-[10px] font-semibold uppercase text-slate-400 md:text-[9px]">
                                 /
                             </span>
                         </div>
-                        <div className="mt-3 flex flex-wrap gap-2">
+                        <div className="mt-3 flex flex-wrap gap-2 md:mt-2 md:gap-1.5">
                             {categoryLabels.map((category) => {
                                 const isActive = category === activeCategory;
                                 return (
@@ -413,22 +415,34 @@ export default function Pos() {
                         </div>
                     )}
 
-                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                        {isLoadingProducts && (
-                            <div className="col-span-full rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
-                                Loading products...
-                            </div>
-                        )}
+                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-4">
+                        {isLoadingProducts &&
+                            skeletonCards.map((item) => (
+                                <div
+                                    key={`skeleton-${item}`}
+                                    className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                                >
+                                    <div className="space-y-3">
+                                        <div className="h-4 w-3/4 animate-pulse rounded-full bg-slate-100" />
+                                        <div className="h-3 w-1/3 animate-pulse rounded-full bg-slate-100" />
+                                    </div>
+                                    <div className="mt-6 flex items-end justify-between">
+                                        <div className="h-5 w-16 animate-pulse rounded-full bg-slate-100" />
+                                        <div className="h-4 w-16 animate-pulse rounded-full bg-slate-100" />
+                                    </div>
+                                </div>
+                            ))}
                         {!isLoadingProducts && products.length === 0 && (
                             <div className="col-span-full rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
                                 No products match your search.
                             </div>
                         )}
-                        {products.map((product) => {
-                            const remaining = availableQty(product);
-                            const isOut = remaining <= 0;
-                            return (
-                                <button
+                        {!isLoadingProducts &&
+                            products.map((product) => {
+                                const remaining = availableQty(product);
+                                const isOut = remaining <= 0;
+                                return (
+                                    <button
                                     key={product.id}
                                     onClick={() => addToCart(product)}
                                     disabled={isOut}
@@ -460,7 +474,7 @@ export default function Pos() {
                                     </div>
                                 </button>
                             );
-                        })}
+                            })}
                     </div>
                 </section>
 

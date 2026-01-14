@@ -401,3 +401,8 @@ If you ever hesitate between:
 Pick **faster**.
 
 Speed + clarity is what *actually* makes POS UIs feel cool.
+
+
+
+## 18. Responsiveness
+- The POS and Admin panel must be responsive to the screen size, and must still adapt a two column style for POS, collapsible sidebar for admin/dashboard, and improved responsiveness for all pages.

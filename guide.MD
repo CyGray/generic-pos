@@ -59,39 +59,39 @@
 
 ### Setup
 
-- [ ] `php artisan migrate --seed` runs without errors
-- [ ] `npm run dev` and `php artisan serve` start without errors
+- [x] `php artisan migrate --seed` runs without errors
+- [x] `npm run dev` and `php artisan serve` start without errors
 
 ### POS flow
 
-- [ ] Search products by name and SKU
+- [x] Search products by name and SKU
 - [ ] Scan a barcode and add to cart (barcode field)
-- [ ] Add items to cart and adjust quantity (+/- and remove)
-- [ ] Checkout with cash received >= total
-- [ ] Confirm sale clears cart
-- [ ] Receipt modal shows line items and totals
-- [ ] Print receipt opens the receipt print page
+- [x] Add items to cart and adjust quantity (+/- and remove)
+- [x] Checkout with cash received >= total
+- [x] Confirm sale clears cart
+- [x] Receipt modal shows line items and totals
+- [x] Print receipt opens the receipt print page
 - [ ] `R` reprints the last receipt
 
 ### Admin flow
 
-- [ ] Admin login access to `/admin`
-- [ ] Create product and verify it appears in list
-- [ ] Edit product and verify updates
-- [ ] Deactivate product and verify it disappears from POS
-- [ ] Soft delete product and restore it from Deleted filter
-- [ ] Receive stock and verify on-hand increases
-- [ ] Adjust stock and verify on-hand changes
-- [ ] Stock movements list shows receive/adjust/sale/void entries
-- [ ] Stock movements filters (product/type/date) work
-- [ ] CSV export downloads a file
-- [ ] Void a sale and verify status changes to voided
-- [ ] Reprint a receipt from Admin sales list
+- [x] Admin login access to `/admin`
+- [x] Create product and verify it appears in list
+- [x] Edit product and verify updates
+- [x] Deactivate product and verify it disappears from POS
+- [x] Soft delete product and restore it from Deleted filter
+- [x] Receive stock and verify on-hand increases
+- [x] Adjust stock and verify on-hand changes
+- [x] Stock movements list shows receive/adjust/sale/void entries
+- [x] Stock movements filters (product/type/date) work
+- [x] CSV export downloads a file
+- [x] Void a sale and verify status changes to voided
+- [x] Reprint a receipt from Admin sales list
 
 ### Permissions
 
-- [ ] Cashier cannot access `/admin`
-- [ ] Cashier can post sales at `/pos`
+- [x] Cashier cannot access `/admin`
+- [x] Cashier can post sales at `/pos`
 
 ## Notes
 

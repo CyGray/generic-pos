@@ -83,9 +83,16 @@ const currency = new Intl.NumberFormat('en-PH', {
 
 export default function Admin() {
     useEffect(() => {
-        document.documentElement.classList.add('admin-soft');
+        const root = document.documentElement;
+        const wasDark = root.classList.contains('dark');
+        root.classList.remove('dark');
+        root.classList.add('admin-soft');
+
         return () => {
-            document.documentElement.classList.remove('admin-soft');
+            root.classList.remove('admin-soft');
+            if (wasDark) {
+                root.classList.add('dark');
+            }
         };
     }, []);
 
@@ -396,8 +403,28 @@ export default function Admin() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Admin" />
-            <div className="flex h-full flex-1 flex-col gap-6 p-6">
-                <div className="grid gap-4 md:grid-cols-3">
+            <div className="flex h-full flex-1 flex-col gap-8 rounded-2xl bg-slate-50 p-8 text-slate-900">
+                <section className="mx-auto flex w-full max-w-[1400px] flex-col gap-6">
+                    <div className="flex flex-wrap items-end justify-between gap-4">
+                        <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                                Admin Console
+                            </p>
+                            <h1 className="text-2xl font-semibold text-slate-900 md:text-3xl">
+                                Operations Overview
+                            </h1>
+                            <p className="mt-2 text-sm text-slate-500">
+                                Track sales, inventory, and stock movement in one place.
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+                            <span>Live today</span>
+                            <span className="rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-semibold uppercase text-emerald-600">
+                                Active
+                            </span>
+                        </div>
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-3">
                     {[
                         {
                             label: 'Sales today',
@@ -408,12 +435,12 @@ export default function Admin() {
                     ].map((item) => (
                         <div
                             key={item.label}
-                            className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
                         >
-                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                 {item.label}
                             </p>
-                            <p className="mt-2 text-2xl font-bold text-slate-900">
+                            <p className="mt-3 text-3xl font-semibold text-slate-900">
                                 {item.value}
                             </p>
                         </div>
@@ -425,16 +452,20 @@ export default function Admin() {
                         {errorMessage}
                     </div>
                 )}
+                </section>
 
-                <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <section className="mx-auto grid w-full max-w-[1400px] gap-6 xl:grid-cols-[2fr_1fr]">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                             <div>
-                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                     Products
                                 </p>
-                                <p className="text-lg font-semibold text-slate-900">
+                                <p className="text-xl font-semibold text-slate-900">
                                     Catalog overview
+                                </p>
+                                <p className="mt-1 text-sm text-slate-500">
+                                    Create, update, and manage availability.
                                 </p>
                             </div>
                             <div className="flex flex-wrap items-center gap-2">
@@ -472,7 +503,7 @@ export default function Admin() {
                         </div>
 
                         {isCreateOpen && (
-                            <div className="mt-4 grid gap-3 rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4">
+                            <div className="mt-6 grid gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5">
                                 <div className="grid gap-3 md:grid-cols-2">
                                     <input
                                         value={createForm.name}
@@ -563,7 +594,7 @@ export default function Admin() {
                         )}
 
                         {isEditOpen && (
-                            <div className="mt-4 grid gap-3 rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4">
+                            <div className="mt-6 grid gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5">
                                 <div className="flex flex-wrap items-center justify-between gap-2">
                                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                                         Edit product
@@ -683,7 +714,7 @@ export default function Admin() {
                             </div>
                         )}
 
-                        <div className="mt-4 overflow-x-auto">
+                        <div className="mt-6 overflow-x-auto">
                             <table className="min-w-full text-left text-sm">
                                 <thead className="text-xs uppercase tracking-wide text-slate-400">
                                     <tr>
@@ -789,9 +820,12 @@ export default function Admin() {
                     </div>
 
                     <div className="flex flex-col gap-4">
-                        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                 Receive stock
+                            </p>
+                            <p className="text-lg font-semibold text-slate-900">
+                                Increase inventory
                             </p>
                             <div className="mt-3 grid gap-3">
                                 <select
@@ -869,9 +903,12 @@ export default function Admin() {
                             </div>
                         </div>
 
-                        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                 Adjust stock
+                            </p>
+                            <p className="text-lg font-semibold text-slate-900">
+                                Corrections and shrinkage
                             </p>
                             <div className="mt-3 grid gap-3">
                                 <select
@@ -948,9 +985,9 @@ export default function Admin() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div className="grid gap-4 md:grid-cols-3">
+                <section className="mx-auto grid w-full max-w-[1400px] gap-4 md:grid-cols-3">
                     {[
                         {
                             label: 'Daily sales',
@@ -976,28 +1013,31 @@ export default function Admin() {
                     ].map((item) => (
                         <div
                             key={item.label}
-                            className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
                         >
-                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                 {item.label}
                             </p>
-                            <p className="mt-2 text-lg font-semibold text-slate-900">
+                            <p className="mt-3 text-lg font-semibold text-slate-900">
                                 {item.value}
                             </p>
-                            <p className="mt-1 text-xs text-slate-400">{item.note}</p>
+                            <p className="mt-2 text-xs text-slate-400">{item.note}</p>
                         </div>
                     ))}
-                </div>
+                </section>
 
-                <div className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <section className="mx-auto grid w-full max-w-[1400px] gap-6 xl:grid-cols-[1.3fr_1fr]">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                     Recent sales
                                 </p>
-                                <p className="text-lg font-semibold text-slate-900">
+                                <p className="text-xl font-semibold text-slate-900">
                                     Void controls
+                                </p>
+                                <p className="mt-1 text-sm text-slate-500">
+                                    Review and reprint recent receipts.
                                 </p>
                             </div>
                             <button
@@ -1007,7 +1047,7 @@ export default function Admin() {
                                 Refresh
                             </button>
                         </div>
-                        <div className="mt-4 space-y-3">
+                        <div className="mt-6 space-y-3">
                             {sales.length === 0 ? (
                                 <p className="rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
                                     No sales yet.
@@ -1016,7 +1056,7 @@ export default function Admin() {
                                 sales.map((sale) => (
                                     <div
                                         key={sale.id}
-                                        className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-100 px-3 py-2 text-sm"
+                                        className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-100 px-4 py-3 text-sm"
                                     >
                                         <div>
                                             <p className="font-semibold text-slate-900">
@@ -1071,14 +1111,17 @@ export default function Admin() {
                         </div>
                     </div>
 
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                                     Stock movements
                                 </p>
-                                <p className="text-lg font-semibold text-slate-900">
-                                    Latest 50 entries
+                                <p className="text-xl font-semibold text-slate-900">
+                                    Latest entries
+                                </p>
+                                <p className="mt-1 text-sm text-slate-500">
+                                    Filter by product, type, or date.
                                 </p>
                             </div>
                             <button
@@ -1088,7 +1131,7 @@ export default function Admin() {
                                 Refresh
                             </button>
                         </div>
-                        <div className="mt-4 grid gap-3 rounded-lg border border-slate-100 bg-slate-50 p-3 text-xs text-slate-500">
+                        <div className="mt-6 grid gap-3 rounded-xl border border-slate-100 bg-slate-50 p-4 text-xs text-slate-500">
                             <select
                                 value={movementFilters.product_id}
                                 onChange={(event) =>
@@ -1164,7 +1207,7 @@ export default function Admin() {
                                 </button>
                             </div>
                         </div>
-                        <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+                        <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
                             <button
                                 onClick={() => setMovementPage((page) => Math.max(1, page - 1))}
                                 disabled={movementMeta.page <= 1}
@@ -1196,7 +1239,7 @@ export default function Admin() {
                                 stockMovements.map((movement) => (
                                     <div
                                         key={movement.id}
-                                        className="rounded-lg border border-slate-100 px-3 py-2"
+                                        className="rounded-xl border border-slate-100 px-4 py-3"
                                     >
                                         <div className="flex items-center justify-between">
                                             <p className="font-semibold text-slate-900">
@@ -1220,7 +1263,7 @@ export default function Admin() {
                             )}
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </AppLayout>
     );
